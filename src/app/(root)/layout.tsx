@@ -1,16 +1,13 @@
 
 import type { Metadata } from "next";
-import { Inter as FontSans} from "next/font/google"
+import { Sora} from "next/font/google"
 
 import "../globals.css";
 import NavBar from "@/components/NavBar";
 
 
+const sora = Sora({ subsets: ['latin'] });
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
 
 export const metadata: Metadata = {
   title: "Buy Me a Coffee",
@@ -24,7 +21,7 @@ export default function RootLayout({
 }>) {
    return (
     <html lang="en">
-      <body className={fontSans.className}>
+      <body style = {{'--font-sora': sora.style.fontFamily}  as React.CSSProperties}>
         <main>
         <NavBar/>
         

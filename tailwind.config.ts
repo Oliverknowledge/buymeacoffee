@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss"
-
+const { fontFamily } = require("tailwindcss/defaultTheme")
 const config = {
   darkMode: ["class"],
   content: [
@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sora: ['var(--font-sora)', 'sans-serif']
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -67,15 +67,3 @@
     @apply bg-background text-foreground;
   }
 }
-h1,
-h2,
-h3{
-  @apply text-[#222222];
-}
-h1,
-h2,
-h3,
-h4,
-p{
-  @apply font-sans;
-}
