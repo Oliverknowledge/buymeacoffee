@@ -15,20 +15,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 5, // Slide-up effect
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
+
 const SignUp = () => {
   const ref = useRef(null);
   const [positionIndexes, setPositionIndexes] = useState([0,1,2,3,4,5])
@@ -66,10 +53,10 @@ const SignUp = () => {
       const updateIndexes = prevIndexes.map((prevIndex) => (prevIndex +  1 ) % 6)
       return updateIndexes;
       }
-      else if (prevIndexes[0] === 2) {
+      else if (prevIndexes[0] === 1) {
         return [1,2,3,4,5,0]
       }
-      else if (prevIndexes[0] === 5){
+      else if (prevIndexes[0] === 4){
         return [4,5,0,1,2,3]
       }
       else{
@@ -86,7 +73,7 @@ const SignUp = () => {
       return updateIndexes;
       }
       else if (prevIndexes[0] ===  2) {
-        return [2,3,4,5,1,0]
+        return [2,3,4,5,0,1]
       }
       else if (prevIndexes[0] === 5){
         return [5,0,1,2,3,4]
@@ -132,7 +119,9 @@ const SignUp = () => {
     >
       <div className = "h-full  col-span-2  relative overflow-hidden">
         <div className = "h-[55.9rem] pt-10 mx-10 ">
+          <Link href = "/" >
         <Image src = "/signupcoffee.svg" width = "40" height = "40" alt = "logo" className = ""/>
+        </Link>
         <h3 className = "mt-7 ml-2">Welcome to Buy Me a Coffee</h3>
         <div className = "my-12 h-[50rem]  translate-y-[3rem]   ">
           <ol className = "flex flex-row  left-0 w-full   ">
@@ -183,17 +172,12 @@ const SignUp = () => {
               <p>Already have an account?</p>
               <Link className = "ml-2 underline" href = "/login">Log in</Link>
         </div>
-        <motion.div className = "flex items-center justify-center h-[90%] w-[100%] " initial = "hidden" animate = "visible" variants = {itemVariants}>
+        <div className = "flex items-center justify-center h-[90%] w-[100%] " >
           <div className ="flex flex-col">
-          <h2 className = "font-semibold text-3xl">
-            Create your account
-          </h2>
-          <h3 className = " text-gray-400 text-md">
-            Choose a username for your page
-          </h3>
+          
             <UsernameForm/>
           </div>
-        </motion.div>
+        </div>
           <div className = " -translate-y-[1rem] absolute w-full h-[1px] bg-gray-200 "/>
             <h3 className = "text-gray-600 ml-16 mt-7 text-sm ">By continuing, you agree to the <span className = "underline text-gray-900">terms of service</span> and <span className = "underline text-gray-800">privacy policy.</span></h3>
       </div>

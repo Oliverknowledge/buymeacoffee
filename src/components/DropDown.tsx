@@ -53,7 +53,7 @@ export function DropDown({Footer, title}: {Footer: boolean, title: string}){
                         <div key = {item.title} className = "flex flex-col items-start">
                             <div className = {`flex-row flex hover:bg-gray-100 px-2 py-4 rounded-lg  w-full  `}>
                                 {item.icon}
-                                <p className = "text-normal">{item.title}</p>
+                                <p className = "text-normal ml-4">{item.title}</p>
                             </div>
                         </div>
                     ))}
