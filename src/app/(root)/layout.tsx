@@ -1,4 +1,4 @@
-
+import { Analytics } from "@vercel/analytics/react"
 import type { Metadata } from "next";
 import { Sora} from "next/font/google"
 
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body style = {{'--font-sora': sora.style.fontFamily}  as React.CSSProperties}>
         <main>
         <NavBar/>
-        
+        <Analytics mode={'production'} />
         {children}
         </main></body>
     </html>

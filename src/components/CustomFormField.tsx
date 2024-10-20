@@ -13,6 +13,7 @@ import {
 import { Input } from "./ui/input";
 import { set } from "zod";
 import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 
 export enum FormFieldType {
@@ -29,6 +30,8 @@ interface CustomProps {
   control: Control<any>;
   name: string;
   label?: string;
+  desc?: string;
+  colour?: string;
   placeholder?: string;
   iconSrc?: string;
   iconAlt?: string;
@@ -41,8 +44,9 @@ interface CustomProps {
 }
 
 const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder }= props;
+  const { fieldType, iconSrc, iconAlt, placeholder, desc, colour } = props;
   switch (fieldType) {
+
     case FormFieldType.INPUT:
       return (
         <div className="flex mt-2">
@@ -80,7 +84,36 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
         </FormControl>
         </div>
       )
-     
+      case FormFieldType.CHECKBOX:
+            return (
+              
+              <FormControl>
+                <div className = "flex items-center gap-2 w-[208px]">
+                  <div className = "translate-x-[12.75rem] -translate-y-[3rem]">
+                  <Checkbox id = {props.name}  checked= {field.value} onCheckedChange = {field.onChange}/>
+                  </div>
+                  <div className = "translate-y-[2.5rem] ">
+                  {iconSrc && (
+                      <div className = {` w-[2.5rem] h-[2.5rem] mt-2 rounded-full ml-2 flex items-center justify-center`}
+                      style = {{ backgroundColor:  colour}}
+                      >
+                      <Image
+                        src={iconSrc}
+                        height={20}
+                        width={20}
+                        alt={iconAlt || "icon"}
+
+                      />
+                      </div>
+                  )}                 
+                  <div className = "my-2">
+                    <label htmlFor = {props.name} className = "font-semibold ">{props.name}</label>
+                    <p className = "text-gray-600 translate-y-1 ">{desc}</p>
+                    </div>
+                  </div>
+                </div>
+              </FormControl>
+            )
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
     default:
@@ -97,7 +130,7 @@ const CustomFormField = (props: CustomProps) => {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className= {`flex-1 ${props.fieldType === FormFieldType.TEXTAREA&& "my-4  "}`}>
+        <FormItem className= {`flex-1 ${props.fieldType === FormFieldType.TEXTAREA && "my-4  "}`}>
           {props.fieldType !== FormFieldType.CHECKBOX && label && (
             <FormLabel className="font-semibold">{label}</FormLabel>
           )}

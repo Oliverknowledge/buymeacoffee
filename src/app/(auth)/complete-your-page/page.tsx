@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import OnboardingForm from '@/components/OnboardingForm'
-
 const containerVariants = {
   hidden: {},
   visible: {
@@ -15,6 +14,7 @@ const containerVariants = {
     },
   },
 };
+
 
 const Page = () => {
     const [progressArray, setProgressArray] = useState([1, 0, 0]); // First bar starts at 1, the others at 0
@@ -70,14 +70,11 @@ const Page = () => {
     <motion.div className="w-full h-full flex flex-col items-center justify-center" initial="hidden" animate="visible" variants={containerVariants}>
       <div className="flex flex-row items-end justify-between h-[10vh] w-full px-12">
         <Link href="/"><Image src="/bmc-brand-logo/bmc-brand-icon.png" width="25" height="25" alt="logo" /></Link>
-        <Button variant="outline" size="sm" className="font-semibold" onClick={() => { router.push("/") }}>Logout</Button>
+        <Button variant="outline" size="sm" className="font-semibold w-[5rem]" onClick={() => { router.push("/") }}>Logout</Button>
       </div>
-      <div className="h-[55vh] mx-auto w-[60vw] flex flex-col items-center">
-        <h1 className="font-[650] text-2xl pr-2">Complete your page</h1>
-        <div className="mt-16 h-full w-[700px]">
+     
           <OnboardingForm progress={progressbar} />
-        </div>
-      </div>
+       
 
       {/* First Progress Section */}
       <div className="absolute w-[33%] h-1 bottom-28 bg-gray-200 left-0">

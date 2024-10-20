@@ -9,6 +9,9 @@ import { Button } from './ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
+import { checkboxes } from '../../data/Checkboxes'
+import { useRouter } from 'next/navigation'
+import { setUser } from '@/actions/user.actions'
 const userFormValidation = z.object({
     identificationDocument: z.custom<File[]>().optional(),
     Name: z.string().min(2).max(50),
@@ -19,6 +22,7 @@ const userFormValidation = z.object({
 })
 const OnboardingForm =  ({progress}: {progress: () => void}) => {
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
     const submitted = useRef(false)
     // Initialize form with react-hook-form and zod validation
     const form = useForm<z.infer<typeof userFormValidation>>({
@@ -32,12 +36,10 @@ const OnboardingForm =  ({progress}: {progress: () => void}) => {
     });
   
     // Submit handler for the form
-    const onSubmit = async (values: z.infer<typeof userFormValidation>) => {
+    const onSubmit = async () => {
       setIsLoading(true);
-      console.log(values);
       submitted.current = true;
       try { // Handle form submission logic
-       
         progress();
       } catch (error: any) {
         console.error(error.message);
@@ -45,10 +47,31 @@ const OnboardingForm =  ({progress}: {progress: () => void}) => {
         setIsLoading(false);
       }
     };
-  
+    const onSubmit1 = async (values: z.infer<typeof userFormValidation>) => {
+      setIsLoading(true);
+      try{
+        progress();
+        router.push("/dashboard")
+        setUser({
+          identificationDocument: values.identificationDocument,
+          Name: values.Name,
+          About: values.About,
+          Link: values.Link
+        })
+      
+      }catch(error: any){
+        console.log(error.message)
+      }
+      finally{
+        setIsLoading(false);
+      }
+    }; 
     return (
       <>
       {!submitted.current ? (
+        <div className="h-[55vh] mx-auto w-[60vw] flex flex-col items-center">
+        <h1 className="font-[625] text-2xl pr-2">Complete your page</h1>
+        <div className="mt-16 h-full w-[700px]">
         <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-full flex items-center  ">
           <section className="flex flex-row h-[80%] w-[50%]  ">
@@ -114,13 +137,32 @@ const OnboardingForm =  ({progress}: {progress: () => void}) => {
           )}
         </form>
       </Form>
+      </div>
+      </div>
       )
       :
       (
+        <div className="h-[55vh] mx-auto w-[60vw] flex flex-col items-center">
+        <h1 className="font-[625] text-2xl pr-2">Lastly, what&apos;s your plan with buy me a coffee?</h1>
+        <div className="mt-16 h-full w-[800px]">
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-full flex items-center ">
-
-  
+        <form onSubmit={form.handleSubmit(onSubmit1)} className="w-full h-full flex items-center gap-4 flex-wrap ">
+        {checkboxes.map((item) => (
+          <React.Fragment key = {item.id}>
+            <div className = "w-[15rem] h-[14rem] border border-gray-200 rounded-2xl shadow-md  ">
+                <CustomFormField
+                    iconAlt= {item.iconAlt}
+                    iconSrc = {item.iconSrc}
+                    fieldType = {FormFieldType.CHECKBOX}
+                    control = {form.control}
+                    name = {item.name}
+                    label = {item.label}
+                    desc = {item.desc}
+                    colour = {item.colour}
+                />
+            </div>
+           </React.Fragment>
+           ))}
           {/* Conditional Button Rendering */}
           {!isLoading ? (
             <Button
@@ -141,8 +183,12 @@ const OnboardingForm =  ({progress}: {progress: () => void}) => {
           )}
         </form>
       </Form> 
+      </div>
+      </div>
+      
       )}
-      </>
+      
+    </>
     );
   };
   

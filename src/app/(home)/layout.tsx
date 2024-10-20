@@ -9,9 +9,9 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Login | Buy Me a Coffee",
-  description: "Customers can support their favourite creators by donating coffees (donations) to them.",
-};
+  title: "Dashboard | Buy Me A Coffee",
+  description: "Dashboard allows creators to manage their profile",
+}
 
 export default function RootLayout({
   children,
@@ -20,12 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className = "h-full w-full overflow-hidden">
-      <body>
-        <div>
+    <html className = "bg-[#f0f2f5] h-full w-full overflow-hidden">
+      <body className = "h-full w-full">
+        
           {children}
-        </div>
-        </body>
+        
+      </body>
       </html>
   );
 }

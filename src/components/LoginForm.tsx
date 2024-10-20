@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { EyeIcon, EyeOffIcon, Router } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -14,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useEffect, useRef, useState } from "react"
+import {  useState } from "react"
 import { motion } from 'framer-motion'
 import { fetchUser, createUser } from "@/actions/user.actions"
 import { useRouter } from "next/navigation"
@@ -35,38 +34,14 @@ const userDetailsSchema = z.object({
   }),
 })
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1, // Stagger the children animations
-    },
-  },
-};
 
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 5, // Slide-up effect
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
 
-export function UsernameForm() {
+export function LoginForm() {
   const router = useRouter();
   const [signUpUsername, setSignUpUsername] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [ validation, setValidation ] =  useState(false);
-  const ref = useRef(null);
-  const ref2 = useRef(null);
   let username: string;
   
   // Username form
@@ -120,85 +95,24 @@ export function UsernameForm() {
       })
       
     setLoading(false)
-    router.push("/complete-your-page")
+    router.push("/dashboard") 
+
   }
 
   return (
     <>
-      {!signUpUsername ? (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          ref={ref}
+      
+    
+        <div
+         // Add container variants for the second form
+        
         >
-          <motion.div className="flex flex-col" variants={itemVariants}>
-            <h2 className="font-semibold text-3xl">Create your account</h2>
-            <h3 className="text-gray-400 text-md">Choose a username for your page</h3>
-          </motion.div>
-          <Form {...usernameForm}>
-            <form onSubmit={usernameForm.handleSubmit(onSubmitUsername)} className="space-y-8 mt-4">
-              <motion.div variants={itemVariants}>
-                <FormField  
-                  control={usernameForm.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        <h3 className="mt-[12.75px] absolute tracking-wide font-semibold ml-4">
-                          buymeacoffee.com/
-                        </h3>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="yourname"
-                          className="pl-[9.5rem] bg-[#f0f0f0] hover:bg-[#e7e7e7] text-[#222222] focus:bg-white tracking-wide font-semibold w-[25rem]"
-                          {...field}
-                        />
-                         
-                      </FormControl>
-                      <FormMessage>
-                        {validation && "Username already taken"}
-
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </motion.div>
-              {!loading ? (
-                <Button
-                  type="submit"
-                  className="bg-[#FFDD00] font-semibold text-black px-12 py-7 text-lg rounded-full absolute bottom-5 right-16 hover:bg-[#ffcc00]"
-                >
-                  Sign up
-                </Button>
-              ) : (
-                <Button
-                
-                  className="bg-[#FFDD00] font-semibold text-black px-12 py-7 text-lg rounded-full absolute bottom-5 right-16 hover:bg-[#ffd83a]"
-                  disabled
-                >
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="bg-gray-800 rounded-full h-3 w-3 mx-0.5 animate-pulse" />
-                  ))}
-                </Button>
-              )}
-            </form>
-          </Form>
-        </motion.div>
-      ) : (
-        <motion.div
-          variants={containerVariants} // Add container variants for the second form
-          initial="hidden"
-          animate="visible"
-          ref={ref2}
-        >
-          <motion.div className="flex flex-col" variants={itemVariants}>
-            <h2 className="font-semibold text-4xl">Welcome, {usernameForm.getValues("username")}</h2>
-          </motion.div>
+          <div className="flex flex-col" >
+            <h2 className="font-semibold text-4xl">Login</h2>
+          </div>
           <Form {...userDetailsForm}>
             <form onSubmit={userDetailsForm.handleSubmit(onSubmitUser)} className="space-y-4 mt-10">
-              <motion.div variants={itemVariants}> {/* Add item variants to animate input fields */}
+              <div > {/* Add item variants to animate input fields */}
                 <FormField
                   control={userDetailsForm.control}
                   name="email"
@@ -221,7 +135,7 @@ export function UsernameForm() {
                   render={({ field }) => (
                     <FormItem>
                       {/* Button to toggle password visibility */}
-                      <Button type = "button" variant="link" className="absolute translate-x-[20rem] translate-y-1" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Button type = "button"variant="link" className="absolute translate-x-[20rem] translate-y-1" onClick={() => setShowPassword((prev) => !prev)}>
                         {showPassword ? "Hide" : "Show"}
                       </Button>
 
@@ -255,7 +169,7 @@ export function UsernameForm() {
                 />
 
 
-              </motion.div>
+              </div>
               {!loading ? (
                 <Button
                   type="submit"
@@ -275,8 +189,8 @@ export function UsernameForm() {
               )}
             </form>
           </Form>
-        </motion.div>
-      )}
+        </div>
+      
     </>
   )
 }

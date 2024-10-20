@@ -12,5 +12,13 @@ export interface MembershipType {
 export interface userTypes {
     username: string,
     email: string,
-    password: string
+    password: string,
 };
+
+export interface moreUserTypes {
+    identificationDocument: File[] | undefined,
+    Name: string,
+    About: string,
+    Link: string,
+} 
+
